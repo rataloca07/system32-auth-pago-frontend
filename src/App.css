@@ -512,10 +512,10 @@ button.delete:hover{
 }
 .tabla2--table {
     display: inherit;
-    width: 660px;
-    height: 350px;       /* Just for the demo          */
+    width: 750px;
+    height: 250px;       /* Just for the demo          */
     overflow-y: auto;    /* Trigger vertical scroll    */
-    overflow-x: hidden;  /* Hide the horizontal scroll */
+    overflow-x: scroll;  /* Hide the horizontal scroll */
     border-collapse: collapse;
 }
 

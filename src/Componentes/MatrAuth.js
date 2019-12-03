@@ -7,6 +7,8 @@ import { browserHistory } from 'react-router-3';
 import AuthRow from './AuthRow';
 class MatrAuth extends React.Component {
 
+    autorizacionesxGenerar =[];
+    alumnosObtenidos
     constructor(props) {
 
         super(props)
@@ -17,21 +19,70 @@ class MatrAuth extends React.Component {
             cab: [],
             alumno: [],
             historias: [],
-            obtenerDesc: [,]
+            obtenerDesc: [],
+            isChecked: true
+
         }
         this.cab = '';
         this.datosAmA = '';
         this.alumno = '';
         this.historias = '';
         this.obtenerDesc = '';
+        //this.autorizacionesxGenerar='';
     }
     Regresar(e) {
         browserHistory.push('/');
         e.preventDefault();
     }
 
+    agregar(){
+        //this.autorizacionesxGenerar='';
+        var checksAuth=document.getElementsByClassName("checkAutoriza");
+        for (let i=0;i<checksAuth.length;i++) {
+                  if(checksAuth[i].checked==true){
+                //this.autorizacionesxGenerar
+                    console.log("Seleccionado:");
+                    console.log(i);
+                  }
+                }
+
+      }
+
+      generarAutorizacion = (codigoAlumno, beneficios) => {
+        console.log(codigoAlumno,beneficios );
+    }
+
+      /*generarAutorizacion(){
+
+        console.log("Algo");
+
+      }*/
+
+      /*generarAutorizacion=(e)=>{
+          console.log(this.state.alumno.codAlumno);
+        fetch(CONFIG+'recaudaciones/alumno/concepto/listar_cod/'+ this.props.alumno.cod_alumno)
+        .then((response)=>{
+            return response.json()   
+        })
+        .then((pagos)=>{
+            if(pagos.length>0){
+                swal("Consulta realizada exitosamente","","success").then(browserHistory.push('/'+ this.props.alumno.cod_alumno))
+            }
+            else{
+                swal("No se encontraron pagon con el nombre ingresado ","","info");
+            }
+
+
+        })
+        .catch(()=>{
+            swal("Oops,Algo salio mal.!","","error");
+            
+        });
+        e.preventDefault();
+    }*/
+
     componentDidMount() {
-        fetch(CONFIG + '/matriculacab/buscar/' + this.state.codigo)
+        fetch(CONFIG + 'matriculacab/buscar/' + this.state.codigo)
             .then((response) => {
                 return response.json()
             }).then((cab) => {
@@ -131,6 +182,7 @@ class MatrAuth extends React.Component {
         const descuento = this.state.obtenerDesc.map((obtenerDesc, i) => {
             return (
                 <tr key={i}>
+                    <td className="td">{obtenerDesc.id_programa_ciclo}</td>
                     <td className="td">{obtenerDesc.concepto}</td>
                     <td className="td">{obtenerDesc.descripcion_min}</td>
                     <td className="td">{obtenerDesc.credito}</td>
@@ -138,7 +190,15 @@ class MatrAuth extends React.Component {
                     <td className="td">{obtenerDesc.descuento}</td>
                     <td className="td">{obtenerDesc.importe_final}</td>                    
                     <td className="td">{obtenerDesc.cuotas}</td>
-
+                    <td className="td"><label className="row center-xs color_white">
+              <input
+                onClick={this.agregar}
+                className="checkAutoriza"
+                id={i}
+                type="checkbox" />
+              <span> </span>
+            </label>
+                        </td>
                 </tr>
             )
 
@@ -167,7 +227,7 @@ class MatrAuth extends React.Component {
                     </div>
                     <div className="col-xs-9">
                         <div className="SplitPane row">
-                            <div className="inline col-xs-5">
+                            <div className="inline col-xs-4">
                                 <table className="tabla1--table">
                                     <thead>
                                         <tr>
@@ -182,10 +242,11 @@ class MatrAuth extends React.Component {
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="inline col-xs-3">
+                            <div className="inline col-xs-5">
                                 <table className="tabla2--table">
                                     <thead>
                                         <tr>
+                                            <th className="th">CICLO</th>
                                             <th className="th">CONCEPTO</th>
                                             <th className="th">DESCRIPCION</th>
                                             <th className="th">CRÉDITO</th>
@@ -193,6 +254,7 @@ class MatrAuth extends React.Component {
                                             <th className="th">DESCUENTO</th>
                                             <th className="th">IMPORTE FINAL</th>
                                             <th className="th">CUOTAS</th>
+                                            <th className="th">OK</th>
                                         </tr>
                                     </thead>
                                     
@@ -205,7 +267,21 @@ class MatrAuth extends React.Component {
                     </div>
 
                 </div>
+                <div className="row">
+                    <div className="col-md-9"></div>
+                    <div className="col-md-2">
+                    <button onClick={() => this.generarAutorizacion(this.state.alumno.codAlumno,this.state.obtenerDesc)} className="waves-effect waves-light btn-small botonazul2 start">
+            Generar Autorización<i className="large material-icons left">check</i>
+            </button>
+                    </div>
+                    </div>
                 <hr></hr>
+
+
+
+            
+
+                
                 <div className="row">
                     <div className="col-md-12">
                         <table className="table-small">
