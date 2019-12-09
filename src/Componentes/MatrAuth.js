@@ -128,10 +128,11 @@ class MatrAuth extends React.Component {
                 return response.json()
             }).then((hist) => {
 
-                /*if(hist.length=0){
+                if(hist== null || hist.length==0){
 
                     swal("El alumno no cuenta con historial de matrícula", "", "info");
-                }*/
+                }
+                console.log(hist.length);
 
                 console.log("datos de alumno-historias");
                 console.log(hist);
@@ -139,6 +140,7 @@ class MatrAuth extends React.Component {
 
             })
             .catch(error => {
+                swal("Error al obtener el historial de matricula", "", "error");
                 console.error(error)
             });
 
