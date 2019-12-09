@@ -58,18 +58,17 @@ class MatrAuth extends React.Component {
 
       }*/
 
-      /*generarAutorizacion=(e)=>{
-          console.log(this.state.alumno.codAlumno);
-        fetch(CONFIG+'recaudaciones/alumno/concepto/listar_cod/'+ this.props.alumno.cod_alumno)
+      /*generarAutorizacion = (codigoAlumno, beneficios){
+        fetch(CONFIG+'recaudaciones/alumno/autorizaciones/generarAutorizacion'+ beneficios)
         .then((response)=>{
             return response.json()   
         })
-        .then((pagos)=>{
-            if(pagos.length>0){
-                swal("Consulta realizada exitosamente","","success").then(browserHistory.push('/'+ this.props.alumno.cod_alumno))
+        .then((autorizaciones)=>{
+            if(autorizaciones.length>0){
+                swal("Autorizaciones registradas exitosamente","","success").then(browserHistory.push('/'+ this.props.alumno.cod_alumno))
             }
             else{
-                swal("No se encontraron pagon con el nombre ingresado ","","info");
+                swal("No se logró registrar las autorizaciones de pago. ","","info");
             }
 
 
@@ -129,6 +128,10 @@ class MatrAuth extends React.Component {
                 return response.json()
             }).then((hist) => {
 
+                if(hist.length=0){
+
+                    swal("El alumno no cuenta con historial de matrícula", "", "info");
+                }
 
                 console.log("datos de alumno-historias");
                 console.log(hist);
